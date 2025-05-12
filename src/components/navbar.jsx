@@ -1,74 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/desi_writing.png';
-import smallLogo from '../assets/desi_white.png';
-import { AiOutlineMenu, AiOutlineUser, AiOutlineClose, AiFillTag } from 'react-icons/ai';
-import { TbTruckDelivery } from 'react-icons/tb';
-import { MdFavorite, MdHelp } from 'react-icons/md';
-import { FaWallet, FaUserFriends } from 'react-icons/fa';
-import { BsFillSaveFill } from 'react-icons/bs';
+import smallLogo from '../assets/desi_main.png';
+import { AiOutlineMenu, AiOutlineUser, AiOutlineClose } from 'react-icons/ai';
+import { MdLocationOn } from "react-icons/md";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (nav) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = nav ? 'hidden' : 'auto';
   }, [nav]);
 
-  const handleNav = () => {
-    setNav(!nav);
-  };
+  const handleNav = () => setNav(!nav);
+  const closeNav = () => setNav(false);
 
-  const closeNav = () => {
-    setNav(false);
+  const handleNavigation = (path) => {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Customize', path: '/customize' },
-    { name: 'Nutrition', path: '/menu' },
+    { name: 'Menu', path: '/menu' },
+    
     { name: 'About Us', path: '/about' },
-    { name: 'Connect', path: '/connect' },
+    { name: 'Connect with Us', path: '/connect' },
   ];
 
   return (
     <>
-      {/* Main Navbar */}
-      <div className="bg-amber-50 drop-shadow-md w-full font-mulish relative z-20">
+      <div className="bg-amber-50 drop-shadow-md w-full font-mulish fixed top-0 left-0 z-[1000]">
         <div className="max-w-[1640px] mx-auto flex justify-between items-center p-4">
-
-          {/* Left side */}
           <div className="flex items-center">
             <div onClick={handleNav} className="cursor-pointer mr-4">
               <AiOutlineMenu size={30} />
             </div>
 
-            {/* Logo */}
-            <Link to="/" onClick={closeNav}>
-              <img src={logo} alt="Desi Eats Logo" className="w-52 hover:scale-105 transition-all" />
-            </Link>
+            <img src={logo} alt="Desi Eats Logo" className="w-52 hover:scale-107 transition-all cursor-pointer" onClick={() => handleNavigation('/')} />
 
-            {/* Navigation Links */}
-            <ul className="hidden lg:flex items-center gap-12 font-extrabold text-base ml-8">
+            <ul className="hidden lg:flex items-center gap-12 font-extrabold text-lg ml-8" style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontWeight: 800 }}>
               {navLinks.map((link, index) => (
                 <li key={index} className="relative group cursor-pointer px-3 py-1">
-                  <Link to={link.path} onClick={closeNav} className="relative">
+                  <span onClick={() => handleNavigation(link.path)} className="relative cursor-pointer">
                     {link.name}
-                    {/* Underline effect */}
-                    <span className="absolute left-0 -bottom-0.5 h-[3.5px] w-0 bg-orange-600 transition-all duration-300 ease-in-out group-hover:w-full pd-3"></span>
-                  </Link>
+                    <span className="absolute left-0 -bottom-0.5 h-[3.5px] w-0 bg-orange-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Right side */}
-          <div className="hidden md:flex">
-            <button className="flex items-center gap-2 bg-red-800 text-white px-8 py-3 rounded-full border border-black hover:bg-orange-700 transition-all font-extrabold">
+          <div className="hidden md:flex items-center gap-6">
+            <MdLocationOn size={38} className="text-[#9a2446] cursor-pointer hover:text-[#f16323] hover:scale-115 transition-all" onClick={() => handleNavigation('/locations')} />
+            <button onClick={() => handleNavigation('/signin')} className=" cursor-pointer flex items-center gap-2 bg-[#9a2446] text-white px-8 py-3 rounded-full border hover:bg-[#f16323] transition-all font-extrabold hover:scale-105" style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontWeight: 800 }}>
               <AiOutlineUser size={22} />
               Sign In
             </button>
@@ -76,53 +62,29 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Overlay when menu open */}
+      <div className="mt-[80px]"></div>
+
       {nav && (
-        <div onClick={closeNav} className="fixed top-0 left-0 w-full h-screen bg-black/80 z-40"></div>
+        <div onClick={closeNav} className="fixed top-0 left-0 w-full h-screen bg-black/80 z-6000"></div>
       )}
 
-      {/* Sidebar */}
-      <div className={`fixed top-0 ${nav ? 'left-0' : '-left-[100%]'} w-[300px] h-screen bg-amber-50 z-50 p-4 duration-500 ease-in-out`}>
-        {/* Close button */}
+      <div className={`fixed top-0 ${nav ? 'left-0' : '-left-[100%]'} w-[250px] h-screen bg-amber-50 z-7000 p-4 duration-500 ease-in-out`}>
         <AiOutlineClose onClick={closeNav} size={30} className="absolute right-4 top-4 cursor-pointer" />
 
-        {/* Small Logo */}
-        <div className="flex items-center mt-4">
-          <img src={smallLogo} alt="Small Desi Logo" className="w-10 h-10 mr-2" />
-          <h2 className="text-2xl font-extrabold text-[#7C2D53] font-mulish">Desi Eats</h2>
+        <div className="flex flex-col items-start mt-12 mb-6 ml-4">
+          <img src={smallLogo} alt="Small Desi Logo" className="w-25 mb-4" onClick={() => handleNavigation('/')} />
+          <div className="w-30 h-[2px] bg-orange-600"></div>
         </div>
 
-        {/* Mobile Links */}
-        <nav className="mt-10 font-mulish">
-          <ul>
-            <li className="text-xl py-4 flex items-center">
-              <TbTruckDelivery size={25} className="mr-4" />
-              Orders
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <MdFavorite size={25} className="mr-4" />
-              Favorites
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <FaWallet size={25} className="mr-4" />
-              Wallet
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <MdHelp size={25} className="mr-4" />
-              Help
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <AiFillTag size={25} className="mr-4" />
-              Promotions
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <BsFillSaveFill size={25} className="mr-4" />
-              Saved
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <FaUserFriends size={25} className="mr-4" />
-              Invite Friends
-            </li>
+        <nav className="font-mulish mt-8 ml-4">
+          <ul className="space-y-6">
+            {navLinks.map((link, index) => (
+              <li key={index} className="text-lg flex items-start">
+                <span onClick={() => handleNavigation(link.path)} className="text-[#7C2D53] font-extrabold hover:text-orange-600 transition-all cursor-pointer">
+                  {link.name}
+                </span>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

@@ -1,28 +1,36 @@
-import React from "react";
+import React from "react"; 
+import bannerLetters from "../assets/banner_letters.svg";
+import bannerBackground from "../assets/banner9.svg";
 
-const Hero = () => {  
+const Hero = () => {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden z-[50] relative">
       <div className="max-h-[500px] relative">
         {/* Overlay */}
-        <div className="absolute w-full h-full text-gray-200 max-h-[500px] bg-black/40 flex flex-col justify-center pl-12"> 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-            The <span className="text-orange-500">Best</span>
-          </h1>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-            <span className="text-orange-500">Indian</span> Food
-          </h1>
+        <div className="absolute w-full h-full max-h-[500px] bg-black/4 z-[51]"></div>
+
+        {/* New Image - Not Darkened */}
+        <div className="absolute w-full h-full flex justify-center items-center z-[52] transform translate-x-5 translate-y-0">
+          <img
+            src={bannerLetters}
+            alt="Banner Writing"
+            className="w-[500px] md:w-[550px] lg:w-[600px] object-contain z-[52]"
+          />
         </div>
 
-        {/* Full width stretched image */}
+        {/* Full width stretched background image */}
         <img
-          src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={bannerBackground}
           alt="Food"
-          className="w-full h-[500px] object-cover"
+          className="w-full h-[500px] object-cover z-[50]"
         />
       </div>
     </div>
   );
-}
+};
 
 export default Hero;
+
+
+
+
